@@ -23,6 +23,7 @@ Cell.prototype.show = function() {
 	if (this.marked && !this.revealed) {
 		fill(227);
 		line(this.x, this.y, this.x + w, this.y + w);
+		
 	}
 
 	if (this.revealed && !this.marked) {
@@ -38,6 +39,7 @@ Cell.prototype.show = function() {
 				fill(0);
 				text(this.neighborCount, this.x + this.w * 0.5, this.y + this.w - 6);
 			}
+			
 		}
 	}
 }
@@ -77,10 +79,13 @@ Cell.prototype.contains = function(x, y) {
 Cell.prototype.reveal = function() {
 	if (!this.revealed && !this.marked) {
 		this.marked = true;
+		totalMarked++;
 	}
 	else if (this.marked || this.revealed) {
 		this.marked = false;
+		totalMarked--;
 		this.revealed = true;
+		totalRevealed++
 		if (this.neighborCount == 0) {
 			this.floodFill();
 		}
@@ -98,6 +103,7 @@ Cell.prototype.floodFill = function() {
 				var neighbor = grid[i][j];
 				if (!neighbor.bee && !neighbor.revealed) {
 					neighbor.revealed = true;
+					totalRevealed++;
 					neighbor.reveal();
 				}
 			}

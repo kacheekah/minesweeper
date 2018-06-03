@@ -8,7 +8,11 @@ var rows;
 var w = 20;
 
 // bees == bombs
-var totalBees = 20;
+var totalBees = 15;
+//	1`var gameOver = false;
+var won = true;
+var totalRevealed = 0;
+var totalMarked = 0;
 
 
 // set up board
@@ -67,7 +71,17 @@ function gameOver() {
 			grid[i][j].revealed = true;
 		}
 	}
+	console.log("Game over");
 }
+
+ function win() {
+ 	for (var i = 0; i < cols; i++) {
+ 		for (var j = 0; j < rows; j++) {
+ 			grid[i][j].revealed = true;
+ 		}
+ 	}
+ 	console.log("You won!");
+ }
 
 // clicking the mouse on a certain square
 function mousePressed() {
@@ -75,16 +89,26 @@ function mousePressed() {
 	for (var j = 0; j < rows; j++) {
 		if (grid[i][j].contains(mouseX, mouseY)) {
 			grid[i][j].reveal();
+		}
+		
+		if (!grid[i][j].revealed && grid[i][j].marked && !grid[i][j].bee) {
+			totalRevealed++;
+		}
 
-			if (grid[i][j].revealed && grid[i][j].bee) {
- 				gameOver();
- 				}
+		if (grid[i][j].revealed && grid[i][j].bee) {
+ 			gameOver();
+ 			}
+
+		if (totalRevealed + totalBees + totalMarked >= cols * rows && !gameOver) {
+			win();
+			}
+
 			}
 		}
 	}
-}
 
-// draws board
+
+// draws board/*
 function draw() {
   background(255);
 	for (var i = 0; i < cols; i++) {
