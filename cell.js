@@ -1,5 +1,5 @@
 
-
+// initializes cell with i position, j position, and width
 function Cell(i, j, w) {
 	this.i = i;
 	this.j = j;
@@ -12,6 +12,10 @@ function Cell(i, j, w) {
 	this.bee = false;
 }
 
+// show function creates board
+// if cell has not been clicked, will "mark" with slash to mark as bomb
+// if cell clicked again, then will either fill with number, or if bomb, 
+// will fill with bee and game is over
 Cell.prototype.show = function() {
 	stroke(0);
 	noFill();
@@ -38,7 +42,9 @@ Cell.prototype.show = function() {
 	}
 }
 
+// counts number of bees by each cell
 Cell.prototype.countBees = function() {
+
 	// only need to count cells that aren't bees
 	if (this.bee) {
 		this.neighborCount = -1;
@@ -62,10 +68,12 @@ Cell.prototype.countBees = function() {
 	this.neighborCount = total;
 }
 
+// returns if mouse is clicked in cell
 Cell.prototype.contains = function(x, y) {
 	return (x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.w);
 }
 
+// changes what state the cell is in in order to show cell properly
 Cell.prototype.reveal = function() {
 	if (!this.revealed && !this.marked) {
 		this.marked = true;
@@ -80,6 +88,7 @@ Cell.prototype.reveal = function() {
 	
 }
 
+// when a cell with 0 neighbors is clicked, fills all 0s beside it
 Cell.prototype.floodFill = function() {
 	for (var xoff = -1; xoff <= 1; xoff++) {
 		for (var yoff = -1; yoff <= 1; yoff++) {
@@ -95,6 +104,11 @@ Cell.prototype.floodFill = function() {
 		}
 	}
 }
+
+// TODO:
+// doesn't show bees that have been marked off
+// no winning screen
+// no number fading when completed
 
 
 

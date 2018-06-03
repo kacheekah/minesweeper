@@ -1,27 +1,17 @@
- // Minesweeper
+ // Minesweeper game
 
 
-//*/ makes 2D array of columns and rows in board /*
-
-function make2DArray() {
-	var arr = new Array(cols);
-	for (var i = 0; i < arr.length; i++) {
-		arr[i] = new Array(rows);
-	}
-	return arr;
-}
-
-
-
+// initializes variables
 var grid;
 var cols;
 var rows;
 var w = 20;
 
+// bees == bombs
 var totalBees = 20;
 
-//*/ sets up board /*
 
+// set up board
 function setup() {
   createCanvas(201, 201);
   cols = floor(width / w);
@@ -35,7 +25,7 @@ function setup() {
 		}
 	}
 
-	// pick totalBees spots
+	// pick totalBees spots randomly
 	var options = [];
 	for (var i = 0; i < cols; i++) {
 		for (var j = 0; j < rows; j++) {
@@ -50,11 +40,10 @@ function setup() {
 		var j = choice[1];
 		// Deletes spot so no longer an option
 		options.splice(index, 1);
-		// var i = floor(random(cols));
-		// var j = floor(random(rows));
 		grid[i][j].bee = true;
 	}
 
+	// count number of bees for each spot
 	for (var i = 0; i < cols; i++) {
 		for (var j = 0; j < rows; j++) {
 			grid[i][j].countBees();
@@ -62,6 +51,16 @@ function setup() {
 	}
 }
 
+// makes 2D array of columns and rows in board
+function make2DArray() {
+	var arr = new Array(cols);
+	for (var i = 0; i < arr.length; i++) {
+		arr[i] = new Array(rows);
+	}
+	return arr;
+}
+
+// when bomb is clicked, reveal entire board
 function gameOver() {
 	for (var i = 0; i < cols; i++) {
 		for (var j = 0; j < rows; j++) {
@@ -70,6 +69,7 @@ function gameOver() {
 	}
 }
 
+// clicking the mouse on a certain square
 function mousePressed() {
   for (var i = 0; i < cols; i++) {
 	for (var j = 0; j < rows; j++) {
@@ -84,8 +84,7 @@ function mousePressed() {
 	}
 }
 
-//*/ draws board/*
-
+// draws board
 function draw() {
   background(255);
 	for (var i = 0; i < cols; i++) {
